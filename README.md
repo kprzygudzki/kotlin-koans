@@ -19,7 +19,7 @@ how to run Gradle task from the Gradle toolbar in IntelliJ IDEA.
 
 Note that this project isn't intended to be used in Android Studio. If you want to solve koans in Android Studio, check the course in Android Studio with EduTools plugin installed https://github.com/kotlin/kotlin-koans#other-ways-to-solve-koans.
 
-##### Working with the commandline
+##### Working with the commandlinew
 
 You can also build the project and run all tests in the terminal:
 ```

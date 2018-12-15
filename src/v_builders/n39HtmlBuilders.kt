@@ -2,6 +2,7 @@ package v_builders
 
 import util.TODO
 import util.doc39
+import v_builders.data.Product
 import v_builders.data.getProducts
 import v_builders.htmlLibrary.*
 
@@ -19,22 +20,33 @@ fun todoTask39(): Nothing = TODO(
     documentation = doc39()
 )
 
+data class ColumnDefinition(val header: String, val mapper: (Product) -> Any)
+
 fun renderProductTable(): String {
+    val columns = listOf(
+            ColumnDefinition("Product", { product -> product.description }),
+            ColumnDefinition("Price", { product -> product.price }),
+            ColumnDefinition("Popularity", { product -> product.popularity }))
+
     return html {
         table {
             tr {
-                td {
-                    text("Product")
-                }
-                td {
-                    text("Price")
-                }
-                td {
-                    text("Popularity")
+                columns.map { column -> column.header }.map {
+                    td(color = getTitleColor()) {
+                        text(it)
+                    }
                 }
             }
             val products = getProducts()
-            todoTask39()
+            products.mapIndexed { rowIndex, product ->
+                tr {
+                    columns.map { column -> column.mapper }.mapIndexed { colIndex, colFunction ->
+                        td(color = getCellColor(rowIndex, colIndex)) {
+                            text(colFunction(product))
+                        }
+                    }
+                }
+            }
         }
     }.toString()
 }
